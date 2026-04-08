@@ -12,7 +12,7 @@ class UpdateNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', $this->note);
     }
 
     /**
@@ -23,7 +23,7 @@ class UpdateNoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|required|min:3',
+            'title' => 'sometimes|required|min:3|max:255',
             'body'  => 'sometimes|nullable|string',
         ];
     }

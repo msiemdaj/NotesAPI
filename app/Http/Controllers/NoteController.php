@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Http\Resources\NoteResource;
+use App\Models\Note;
 use App\Repositories\NoteRepositoryInterface;
 use App\Services\NoteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class NoteController extends Controller
 {
@@ -39,9 +41,11 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(Note $note)
     {
-        return (new NoteResource($this->noteRepository->findForUser(auth()->user(), $id)))
+        Gate::authorize('view', $note);
+
+        return (new NoteResource($note))
             ->response()
             ->setStatusCode(200);
     }
@@ -49,10 +53,10 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNoteRequest $request, int $id)
+    public function update(UpdateNoteRequest $request, Note $note)
     {
         $updated = $this->noteService->update(
-            $this->noteRepository->findForUser(auth()->user(), $id),
+            $note,
             $request->validated()
         );
 
@@ -64,9 +68,12 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, Note $note)
     {
-        $this->noteService->delete($this->noteRepository->findForUser(auth()->user(), $id));
+        Gate::authorize('delete', $note);
+
+        $this->noteService->delete($note);
+
         return response()->json(
             null, 204
         );

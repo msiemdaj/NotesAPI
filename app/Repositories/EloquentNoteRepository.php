@@ -13,9 +13,9 @@ class EloquentNoteRepository implements NoteRepositoryInterface
         return $user->notes()->paginate(15);
     }
 
-    public function findForUser(User $user, int $id): Note
+    public function find(int $id): Note
     {
-        return $user->notes()->findOrFail($id);
+        return Note::find($id);
     }
 
     public function create(array $data): Note
