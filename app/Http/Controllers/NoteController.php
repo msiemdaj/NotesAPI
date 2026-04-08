@@ -21,7 +21,7 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return (NoteResource::collection($this->noteRepository->all()))
+        return (NoteResource::collection($this->noteRepository->allForUser(auth()->user())))
             ->response()
             ->setStatusCode(200);
     }
@@ -41,7 +41,7 @@ class NoteController extends Controller
      */
     public function show(int $id)
     {
-        return (new NoteResource($this->noteRepository->find($id)))
+        return (new NoteResource($this->noteRepository->findForUser(auth()->user(), $id)))
             ->response()
             ->setStatusCode(200);
     }
@@ -52,7 +52,7 @@ class NoteController extends Controller
     public function update(UpdateNoteRequest $request, int $id)
     {
         $updated = $this->noteService->update(
-            $this->noteRepository->findForUser($request->user(), $id),
+            $this->noteRepository->findForUser(auth()->user(), $id),
             $request->validated()
         );
 
@@ -66,7 +66,7 @@ class NoteController extends Controller
      */
     public function destroy(Request $request, int $id)
     {
-        $this->noteService->delete($this->noteRepository->findForUser($request->user(), $id));
+        $this->noteService->delete($this->noteRepository->findForUser(auth()->user(), $id));
         return response()->json(
             null, 204
         );

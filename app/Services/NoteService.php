@@ -12,7 +12,7 @@ class NoteService
         private readonly NoteRepositoryInterface $noteRepository,
     ) {}
 
-    public function create(array $data)
+    public function create(array $data): Note
     {
         $data['user_id'] = auth()->id();
         $note = $this->noteRepository->create($data);
