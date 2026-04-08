@@ -33,7 +33,7 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        return (new NoteResource($this->noteService->create($request->validated())))
+        return (new NoteResource($this->noteService->create(auth()->user(), $request->validated())))
             ->response()
             ->setStatusCode(201);
     }
@@ -71,11 +71,8 @@ class NoteController extends Controller
     public function destroy(Request $request, Note $note)
     {
         Gate::authorize('delete', $note);
-
         $this->noteService->delete($note);
 
-        return response()->json(
-            null, 204
-        );
+        return response()->noContent();
     }
 }

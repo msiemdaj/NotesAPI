@@ -26,7 +26,7 @@ class EloquentNoteRepository implements NoteRepositoryInterface
     public function update(Note $note, array $data): Note
     {
         $note->update($data);
-        return $note->fresh();
+        return $note;
     }
 
     public function delete(Note $note): void

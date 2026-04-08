@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Events\NoteCreated;
 use App\Models\Note;
+use App\Models\User;
 use App\Repositories\NoteRepositoryInterface;
 
 class NoteService
@@ -12,9 +13,9 @@ class NoteService
         private readonly NoteRepositoryInterface $noteRepository,
     ) {}
 
-    public function create(array $data): Note
+    public function create(User $user, array $data): Note
     {
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = $user->id;
         $note = $this->noteRepository->create($data);
         event(new NoteCreated($note));
         return $note;
