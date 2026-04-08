@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use App\Http\Resources\NoteResource;
-use App\Models\Note;
 use App\Repositories\NoteRepositoryInterface;
 use App\Services\NoteService;
 use Illuminate\Http\Request;
@@ -49,16 +49,26 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Note $note)
+    public function update(UpdateNoteRequest $request, int $id)
     {
-        //
+        $updated = $this->noteService->update(
+            $this->noteRepository->findForUser($request->user(), $id),
+            $request->validated()
+        );
+
+        return (new NoteResource($updated))
+            ->response()
+            ->setStatusCode(200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Note $note)
+    public function destroy(Request $request, int $id)
     {
-        //
+        $this->noteService->delete($this->noteRepository->findForUser($request->user(), $id));
+        return response()->json(
+            null, 204
+        );
     }
 }
