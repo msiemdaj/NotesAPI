@@ -23,9 +23,14 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return (NoteResource::collection($this->noteRepository->allForUser(auth()->user())))
-            ->response()
-            ->setStatusCode(200);
+        $notes = $this->noteRepository->allForUser(auth()->user());
+
+        return $this->success(
+            NoteResource::collection($notes->getCollection())->resolve(),
+            'Data retrieved successfully',
+            200,
+            $notes
+        );
     }
 
     /**
@@ -33,9 +38,16 @@ class NoteController extends Controller
      */
     public function store(StoreNoteRequest $request)
     {
-        return (new NoteResource($this->noteService->create(auth()->user(), $request->validated())))
-            ->response()
-            ->setStatusCode(201);
+        $note = $this->noteService->create(
+            auth()->user(),
+            $request->validated()
+        );
+
+        return $this->success(
+            new NoteResource($note),
+            'Note added successfully',
+            201,
+        );
     }
 
     /**
@@ -45,9 +57,10 @@ class NoteController extends Controller
     {
         Gate::authorize('view', $note);
 
-        return (new NoteResource($note))
-            ->response()
-            ->setStatusCode(200);
+        return $this->success(
+            new NoteResource($note),
+            'Data retrieved successfully',
+        );
     }
 
     /**
@@ -60,15 +73,16 @@ class NoteController extends Controller
             $request->validated()
         );
 
-        return (new NoteResource($updated))
-            ->response()
-            ->setStatusCode(200);
+        return $this->success(
+            new NoteResource($updated),
+            'Note updated successfully',
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Note $note)
+    public function destroy(Note $note)
     {
         Gate::authorize('delete', $note);
         $this->noteService->delete($note);

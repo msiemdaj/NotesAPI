@@ -19,25 +19,36 @@ class AuthController extends Controller
     {
         $result = $this->authService->register($request->validated());
 
-        return response()->json([
-            'user'  => new UserResource($result['user']),
-            'token' => $result['token'],
-        ], 201);
+        return $this->success(
+            [
+                'user'  => new UserResource($result['user']),
+                'token' => $result['token'],
+            ],
+            'Registered successfully',
+            201,
+        );
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->authService->login($request->validated());
 
-        return response()->json([
-            'user'  => new UserResource($result['user']),
-            'token' => $result['token'],
-        ]);
+        return $this->success(
+            [
+                'user'  => new UserResource($result['user']),
+                'token' => $result['token'],
+            ],
+            'Logged in successfully',
+        );
     }
 
     public function logout(Request $request): JsonResponse
     {
         $this->authService->logout($request->user());
-        return response()->json(['message' => 'Logged out']);
+
+        return $this->success(
+            [],
+            'Logged out',
+        );
     }
 }
