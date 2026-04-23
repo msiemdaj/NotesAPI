@@ -5,7 +5,11 @@
         "description": "A RESTful API for managing user notes with authentication via Laravel Sanctum. All protected endpoints require a Bearer token obtained from `/register` or `/login`.",
         "version": "1.0.0"
     },
-    "servers": [],
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api"
+        }
+    ],
     "tags": [
         {
             "name": "Auth",
