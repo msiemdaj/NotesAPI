@@ -72,7 +72,7 @@ To run the queue worker use the artisan command:
 php artisan queue:work
 ```
 
-## API Endpoints
+## Documentation
 
 Full interactive API documentation is provided by **Swagger UI**. You can explore, review, and test all available endpoints directly from your browser.
 
