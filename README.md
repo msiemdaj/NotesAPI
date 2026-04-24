@@ -1,58 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<p align="center">
+<img src="https://img.shields.io/badge/PHP-8.3%2B-blue" alt="PHP Version">
+<img src="https://img.shields.io/badge/Laravel-13.x-red" alt="Laravel Version">
+<img src="https://img.shields.io/badge/Sanctum-4.x-orange" alt="Sanctum Version">
+<img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Notes API
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Notes API is a RESTful API built with Laravel for managing personal notes.  This project provides a secure, scalable foundation for note-taking applications, complete with built-in authentication and interactive API documentation.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Main features
 
-## Learning Laravel
+- **User Authentication:** Secure, token-based access control using [Laravel Sanctum](https://laravel.com/docs/sanctum).
+- **Notes Management:** Complete CRUD operations for notes, scoped to the authenticated user.
+- **Automated Testing:** Comprehensive test coverage ensuring reliability and stability using **PHPUnit**.
+- **Interactive Documentation:** Ready-to-use API docs made with Swagger UI
+- **Policy-based authorization** and **Form Request validation**
+- The project follows clean architecture principles and utilizes design patterns including the Repository and Service layers
+- Background job processing using Laravel queue workers and event-driven logging
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Follow these steps to get the Notes API up and running locally.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/your-username/NotesAPI.git
+cd NotesAPI
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Install Dependencies
+```bash
+composer install
+```
 
-## Contributing
+### Environment Setup
+Configure your environment variables in `.env` (copy from `.env.example`) before running migrations.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cp .env.example .env
+```
 
-## Code of Conduct
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Run Migrations
 
-## Security Vulnerabilities
+```bash
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Running the Application
+
+Run the following command to start the application locally
+
+```bash
+php artisan serve
+```
+
+## Queue Configuration
+This application uses Laravel queues to handle background tasks such as event logging.
+
+Make sure your `.env` file is configured with a queue driver, for example: `QUEUE_CONNECTION=database`
+To run the queue worker use the artisan command:
+
+```bash
+php artisan queue:work
+```
+
+## API Endpoints
+
+Full interactive API documentation is provided by **Swagger UI**. You can explore, review, and test all available endpoints directly from your browser.
+
+Once your local server is running, navigate to: `/docs`
+
+![Swagger.png](Swagger.png)
+
+## Testing
+
+This application uses Laravel's built-in testing tools powered by **PHPUnit**.
+
+```bash
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Notes API is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
