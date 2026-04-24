@@ -28,7 +28,7 @@ Notes API is a RESTful API built with Laravel for managing personal notes.  This
 Follow these steps to get the Notes API up and running locally.
 
 ```bash
-git clone https://github.com/your-username/NotesAPI.git
+git clone https://github.com/msiemdaj/NotesAPI.git
 cd NotesAPI
 ```
 
